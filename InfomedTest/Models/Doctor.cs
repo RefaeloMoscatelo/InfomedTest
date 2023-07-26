@@ -6,7 +6,7 @@ using System.Web;
 
 namespace InfomedTest.Models
 {
-    // Root myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(myJsonResponse);
+   
     public class Address
     {
         public string cityName { get; set; }
@@ -54,6 +54,17 @@ namespace InfomedTest.Models
         public bool isActive { get; set; }
         public List<string> mainSpecializationsIds { get; set; }
         public List<string> subSpecializationsIds { get; set; }
+        
+    }
+    public class Doctor
+    {
+        public int ID { get; set; }
+        public string FullName { get; set; }
+        public int Rating { get; set; }
+        public List<string> Languages { get; set; }
+        public bool isArticle { get; set; }
+        public string PhoneNumber { get; set; }
+
     }
 
 

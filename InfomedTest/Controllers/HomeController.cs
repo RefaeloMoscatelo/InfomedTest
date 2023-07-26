@@ -33,9 +33,8 @@ namespace InfomedTest.Controllers
 
         public ActionResult Doctors()
         {
-
             var path = Server.MapPath(@"~/Models/JsonData/doctors.json");
-
+            
             using (StreamReader r = new StreamReader(path))
             {
                 string Doctorsjson = r.ReadToEnd();
@@ -44,27 +43,38 @@ namespace InfomedTest.Controllers
                   .Where(x => x.promotionLevel <= 5)
                   .OrderBy(x => x.reviews.averageRating)
                  .ThenByDescending(x => x.reviews.totalRatings)
-                 .ThenByDescending(x => x.promotionLevel).ToList();
-                items = FixPhones(items);
-                return View(items);
+                 .ThenByDescending(x => x.promotionLevel).Select(x => new Doctor {
+                     ID = x.id,
+                     FullName = x.fullName,
+                     Rating = x.reviews.averageRating,
+                     Languages = null,
+                     isArticle = false,
+                     PhoneNumber = x.phones[0].number
+                 }).ToList();
+                var list = FixPhones(items);
             }
+            
+          
 
-           
+
+            
+            return View();
         }
-       public List<Root> FixPhones(List<Root> list)
+       public List<Doctor> FixPhones(List<Doctor> list)
         {
-            List<Root> FixedList = new List<Root>();
-            for (int i = 0; i < list.Count; i++)
+            foreach (var item in list.Where(w => !w.PhoneNumber.Contains("-")))
             {
-                if (!list[i].phones[0].number.Contains("-"))
+                if ((item.PhoneNumber.StartsWith("07"))|| (item.PhoneNumber.StartsWith("05")))
                 {
-                    if ((list[i].phones[0].number.ToString().StartsWith("07"))|| (list[i].phones[0].number.ToString().StartsWith("05")))
-                    {
-                        list[i].phones[0].number = list[i].phones[0].number.Insert(3, "-");
-                    }
+                    item.PhoneNumber= item.PhoneNumber.Insert(3, "-");
+                }
+                else
+                {
+                    item.PhoneNumber = item.PhoneNumber.Insert(2, "-");
                 }
             }
-            return FixedList;
+
+            return list;
         }
     }
 }
