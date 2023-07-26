@@ -45,10 +45,26 @@ namespace InfomedTest.Controllers
                   .OrderBy(x => x.reviews.averageRating)
                  .ThenByDescending(x => x.reviews.totalRatings)
                  .ThenByDescending(x => x.promotionLevel).ToList();
+                items = FixPhones(items);
+                return View(items);
             }
 
-            return View();
+           
         }
-       
+       public List<Root> FixPhones(List<Root> list)
+        {
+            List<Root> FixedList = new List<Root>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (!list[i].phones[0].number.Contains("-"))
+                {
+                    if ((list[i].phones[0].number.ToString().StartsWith("07"))|| (list[i].phones[0].number.ToString().StartsWith("05")))
+                    {
+                        list[i].phones[0].number = list[i].phones[0].number.Insert(3, "-");
+                    }
+                }
+            }
+            return FixedList;
+        }
     }
 }
