@@ -9,7 +9,6 @@
 
 <style>
     .star-rating::before {
-        /* What also works: "⭐⭐⭐⭐⭐" or "💛💛💛💛💛" or other characters. */
         content: "⭐⭐⭐⭐⭐";
     }
 
@@ -19,8 +18,9 @@
         -webkit-background-clip: text;
         color: rgba(0, 0, 0, 0.1);
     }
-    .rate{
-        color:blue;
+
+    .rate {
+        color: blue;
     }
 </style>
 
@@ -43,37 +43,58 @@
       transparent 33.333%,
       transparent 100%);
   "> <span class="rate">(@item.Rating.0) </span></div>
-             
-            </td>
-            <td>
-            </td>
-            <td>
-                <p>נותן שירות בשפה:  </p>
-                <span>לרופא יש כתבה משוייכת:  </span> <span class="isArticle">  @item.isArticle</span>
-            </td>
-            <td>
-                <p> <input type="button" id="btnCreateContact" value=@Html.DisplayFor(modelItem => item.PhoneNumber) /></p>
 
-                <p> <input type="button" id="btnCreateContact" value="צור קשר" /></p>
-            </td>
+</td>
+<td>
+</td>
+<td>
+    <p>
+        נותן שירות בשפה:  <span class="langauges">
 
-        </tr>
+    @{ var lastPerson = @item.Languages.LastOrDefault(); }
+    @for (int i = 0; i < @item.Languages.Count; i++)
+    {
+        @(item.Languages[i]!= lastPerson?$"{item.Languages[i]}, ": item.Languages[i]) 
+
     }
+</span>
+    </p>
+    <span>לרופא יש כתבה משוייכת:  </span> <span class="isArticle">  @item.isArticle</span>
+</td>
+<td>
+    <p> <input type="button" value=@Html.DisplayFor(modelItem => item.PhoneNumber) /></p>
+
+    <p> <input type="button" id="btnCreateContact" value="צור קשר" /></p>
+</td>
+
+</tr>
+}
 
 </table>
 
+<div id="contactForm">
+    <div>
+        <div>
+            <label for="Name">שם:</label>
+            <input pattern="/^[a-z\u0590-\u05fe]+$/i" type="text" name="Name" id="Name" value="" required />
+        </div>
+        <div>
+            <label for="Phone">טלפון:</label>
+            <input pattern="[0-9]" type="text" name="Phone" id="Phone" value="" required />
+        </div>
+        <p>
+            <input type="button" value="שלח" id="btnSave" />
+        </p>
+    </div>
+</div>
 
 @section scripts{
     <script>
         $.fn.stars = function () {
             return $(this).each(function () {
-                // Get the value
                 var val = parseFloat($(this).html());
-                // Make sure that the value is in 0 - 5 range, multiply to get width
                 var size = Math.max(0, (Math.min(5, val))) * 16;
-                // Create stars holder
                 var $span = $('<span />').width(size);
-                // Replace the numerical value with stars
                 $(this).html($span);
             });
         }
@@ -90,6 +111,14 @@
                     $(this).html("כן")
                 }
             });
+
+            $("#contactForm").dialog({
+                autoOpen: false, modal: true, show: "blind", hide: "blind"
+            });
+            $("#btnCreateContact").on("click", function () {
+                $("#contactForm").dialog("open");
+            });
+
         });
     </script>
 

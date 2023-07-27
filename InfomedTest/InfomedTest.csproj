@@ -154,6 +154,7 @@
     <Content Include="Models\JsonData\articles.json" />
     <Content Include="Models\JsonData\doctors.json" />
     <Content Include="Models\JsonData\language.json" />
+    <Content Include="Models\JsonData\language - Copy.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -55,6 +55,7 @@ namespace InfomedTest.Controllers
                  }).ToList();
                 var list = FixPhones(items);
                 list = CheckIfArticle(list);
+                list = Languages(list);
                 return View(list);
             }
 
@@ -62,10 +63,68 @@ namespace InfomedTest.Controllers
             
         }
 
+      
+        public List<Doctor> Languages(List<Doctor> list)
+        {
+          //   string[] languagesArr = id.Split(',');
+            //remove last comma and trim all elements
+            //if (//languagesArr.Length>1)
+            //{
+            //  //  languagesArr = languagesArr.Select(x => x == null ? null : x.Trim()).Take(languagesArr.Count() - 1).ToArray();
+            //}
+
+            List<string> listToReturn = new List<string>();
+
+            var path = Server.MapPath(@"~/Models/JsonData/language.json");
+            using (StreamReader r = new StreamReader(path))
+            {
+                string languages = r.ReadToEnd();
+                var jss = new JavaScriptSerializer();
+                var table = jss.Deserialize<dynamic>(languages);
+                Dictionary<string, dynamic> dictio = new Dictionary<string, dynamic>();
+                
+                foreach (var item in table)
+                {
+                    dictio = item.Value;
+                }
+                foreach (var item in list)
+                {
+                    for (int i=0;i < item.Languages.Count;i++)
+                    {
+                        foreach (var dictioItem in dictio)
+                        {
+                            if (item.Languages[i] == dictioItem.Key)
+                            {
+                                item.Languages[i] = dictioItem.Value;
+                                break;
+                            }
+                        }
+                    }
+                    
+                }
+                //foreach (var languageItem in languagesArr)
+                //{
+                //    foreach (var dictioItem in dictio)
+                //    {
+                //        if (languageItem== dictioItem.Key)
+                //        {
+                //            listToReturn.Add(dictioItem.Value);
+                //        }
+                //    }
+                //}
+
+            }
+            return list;
+            //string joined = string.Join(", ", listToReturn);
+
+            //return joined;
+    }
+
+
         //private List<Doctor> AddLanguages(List<Doctor> list)
         //{
         //    var path = Server.MapPath(@"~/Models/JsonData/language.json");
-            
+
 
 
 
