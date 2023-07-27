@@ -1,0 +1,50 @@
+﻿@model IEnumerable<InfomedTest.Models.Doctor>
+
+@{
+    ViewBag.Title = "Doctors";
+}
+
+<h2>רופאים</h2>
+
+
+<style>
+   
+</style>
+
+<table class="table">
+    <tr>
+      
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <span>ד"ר"</span> @Html.DisplayFor(modelItem => item.FullName)
+        <p>  @Html.DisplayFor(modelItem => item.Rating)</p>
+        </td>
+        <td>
+        </td>
+        <td>
+            <p>נותן שירות בשפה:  </p>
+            <span>לרופא יש כתבה משוייכת:  </span>   @Html.DisplayFor(modelItem => item.isArticle)
+        </td>
+        <td>
+            <p> <input type="button" id="btnCreateContact" value=@Html.DisplayFor(modelItem => item.PhoneNumber) /></p>
+          
+            <p> <input type="button" id="btnCreateContact" value="צור קשר" /></p>
+        </td>
+       
+    </tr>
+}
+
+</table>
+
+
+@section scripts{
+    
+    
+    
+    
+    
+    
+    }
