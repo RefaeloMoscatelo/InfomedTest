@@ -8,43 +8,89 @@
 
 
 <style>
-   
+    .star-rating::before {
+        /* What also works: "⭐⭐⭐⭐⭐" or "💛💛💛💛💛" or other characters. */
+        content: "⭐⭐⭐⭐⭐";
+    }
+
+    .star-rating {
+        display: inline-block;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: rgba(0, 0, 0, 0.1);
+    }
+    .rate{
+        color:blue;
+    }
 </style>
 
 <table class="table">
     <tr>
-      
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <span>ד"ר"</span> @Html.DisplayFor(modelItem => item.FullName)
-        <p>  @Html.DisplayFor(modelItem => item.Rating)</p>
-        </td>
-        <td>
-        </td>
-        <td>
-            <p>נותן שירות בשפה:  </p>
-            <span>לרופא יש כתבה משוייכת:  </span>   @Html.DisplayFor(modelItem => item.isArticle)
-        </td>
-        <td>
-            <p> <input type="button" id="btnCreateContact" value=@Html.DisplayFor(modelItem => item.PhoneNumber) /></p>
-          
-            <p> <input type="button" id="btnCreateContact" value="צור קשר" /></p>
-        </td>
-       
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <div>
+                    <span>ד"ר</span> @Html.DisplayFor(modelItem => item.FullName)
+                </div>
+                <div class="star-rating"
+                     style="background-image: linear-gradient(
+      to left,
+      blue 0%,
+      blue  @(item.Rating*20)%,
+      transparent 33.333%,
+      transparent 100%);
+  "> <span class="rate">(@item.Rating.0) </span></div>
+             
+            </td>
+            <td>
+            </td>
+            <td>
+                <p>נותן שירות בשפה:  </p>
+                <span>לרופא יש כתבה משוייכת:  </span> <span class="isArticle">  @item.isArticle</span>
+            </td>
+            <td>
+                <p> <input type="button" id="btnCreateContact" value=@Html.DisplayFor(modelItem => item.PhoneNumber) /></p>
+
+                <p> <input type="button" id="btnCreateContact" value="צור קשר" /></p>
+            </td>
+
+        </tr>
+    }
 
 </table>
 
 
 @section scripts{
-    
-    
-    
-    
-    
-    
-    }
+    <script>
+        $.fn.stars = function () {
+            return $(this).each(function () {
+                // Get the value
+                var val = parseFloat($(this).html());
+                // Make sure that the value is in 0 - 5 range, multiply to get width
+                var size = Math.max(0, (Math.min(5, val))) * 16;
+                // Create stars holder
+                var $span = $('<span />').width(size);
+                // Replace the numerical value with stars
+                $(this).html($span);
+            });
+        }
+        $(document).ready(function () {
+            $(function () {
+                $('span.stars').stars();
+            });
+            $(".isArticle").each(function () {
+                var value = $(this).html();
+                if (value == '  False') {
+                    $(this).html("לא")
+                }
+                else {
+                    $(this).html("כן")
+                }
+            });
+        });
+    </script>
+
+}
