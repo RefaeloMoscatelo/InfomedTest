@@ -24,19 +24,25 @@
     }
 </style>
 
-<table class="table">
-    <tr>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table id="tbl" class="table">
+    <thead>
         <tr>
-            <td>
-                <div>
-                    <span>ד"ר</span> @Html.DisplayFor(modelItem => item.FullName)
-                </div>
-                <div class="star-rating"
-                     style="background-image: linear-gradient(
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div>
+                        <span>ד"ר</span> @Html.DisplayFor(modelItem => item.FullName)
+                    </div>
+                    <div class="star-rating"
+                         style="background-image: linear-gradient(
       to left,
       blue 0%,
       blue  @(item.Rating*20)%,
@@ -69,7 +75,7 @@
 
 </tr>
 }
-
+    </tbody>
 </table>
 
 <div id="contactForm">
@@ -78,7 +84,7 @@
         <div class="form-group">
             <div class="first_row_form">
                 <input type="text" class="form-control" id="fname" name="Name" placeholder="שם" tabindex="1" pattern="[A-Za-z\u0590-\u05FF]*" title="Name should only contain letters" required>
-               </div>
+            </div>
         </div>
         <div class="form-group">
             <input type="tel" maxlength="15" class="form-control" id="Tel" name="Tel" placeholder="Tel" tabindex="4" pattern="^[0-9]*$" title="Phone should only contain numbers and 15 to max" required>
@@ -109,6 +115,7 @@
             });
         }
         $(document).ready(function () {
+            $("#tbl").dataTable();
             $(function () {
                 $('span.stars').stars();
             });
@@ -121,7 +128,7 @@
                     $(this).html("כן")
                 }
             });
-
+           
             $("#contactForm").dialog({
                 autoOpen: false, modal: true, show: "blind", hide: "blind"
             });
