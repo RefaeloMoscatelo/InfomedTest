@@ -10,7 +10,7 @@
 <style>
     .star-rating::before {
         content: "⭐⭐⭐⭐⭐";
-    }
+    } 
 
     .star-rating {
         display: inline-block;
@@ -22,8 +22,11 @@
     .rate {
         color: blue;
     }
+    #btnSave {
+        margin:5%;
+    }
 </style>
-
+dialo
 <table id="tbl" class="table">
     <thead>
         <tr>
@@ -79,28 +82,27 @@
 </table>
 
 <div id="contactForm">
-    <form action="javascript:;" id="frm" onsubmit="insert_value()">
+    <form action="javascript:;" id="frm" >
 
         <div class="form-group">
             <div class="first_row_form">
-                <input type="text" class="form-control" id="fname" name="Name" placeholder="שם" tabindex="1" pattern="[A-Za-z\u0590-\u05FF]*" title="Name should only contain letters" required>
+                <input type="text" class="form-control" id="fname" name="Name" placeholder="שם" tabindex="1" pattern="[A-Za-z \u0590-\u05FF]*" title="Name should only contain letters" required>
             </div>
         </div>
         <div class="form-group">
             <input type="tel" maxlength="15" class="form-control" id="Tel" name="Tel" placeholder="Tel" tabindex="4" pattern="^[0-9]*$" title="Phone should only contain numbers and 15 to max" required>
         </div>
-
-
+        <div>
+            <input type="email" class="form-control" id="email" name="Email" placeholder="Email" tabindex="2" required>
+        </div>
         <div class="form-group">
             <div class="first_row_form">
                 <div class="text-center">
-                    <button id="submitBtn" type="submit" class="btn btn-start-order">SUBMIT </button>
+                    <button id="btnSave" type="submit" class="btn btn-start-order">SUBMIT </button>
                 </div>
+                <p id="sendSuccess"></p>
             </div>
         </div>
-
-
-
     </form>
 </div>
 
@@ -130,14 +132,14 @@
             });
            
             $("#contactForm").dialog({
-                autoOpen: false, modal: true, show: "blind", hide: "blind"
+                autoOpen: false, modal: true, show: "blind", hide: "blind", height: 280,
             });
             $(".btnCreateContact").on("click", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var DrId = $(this).attr('name');
                 $("#hdn").val(DrId);
-                $("#frm")[0].reset()
+                $("#frm")[0].reset();
                 $('#sendSuccess').html("");
                 $("#contactForm").dialog("open");
 
@@ -152,8 +154,8 @@
                     data: form.serialize(),
                     type: 'POST',
                     success: function (data) {
-                        $('#sendSuccess').html("פרטייך נשלחו בהצלחה");
-
+                        $('#sendSuccess').html("פרטייך נשלחו בהצלחה");                      
+                        $("#frm")[0].reset();
                     }
                 });
             });
