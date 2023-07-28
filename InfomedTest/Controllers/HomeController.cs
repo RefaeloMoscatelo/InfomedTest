@@ -150,11 +150,11 @@ namespace InfomedTest.Controllers
         public void SaveContact(string drid,string Name, string Tel, string Email)
         {
             var path = Server.MapPath(@"~/Models/JsonData/details.txt");
-
+            DateTime date = DateTime.Now;
             using (var fs = new FileStream(path, FileMode.Append))
             using (var sw = new StreamWriter(fs))
             {
-                sw.WriteLine(string.Format("{0} ask to contact Dr {1} and his phone is {2} and Email {3}", Name, drid, Tel, Email));
+                sw.WriteLine(string.Format("{0} ask to contact Dr {1} and his phone is {2} and Email {3} sent at {4}", Name, drid, Tel, Email,date));
             }
 
 
