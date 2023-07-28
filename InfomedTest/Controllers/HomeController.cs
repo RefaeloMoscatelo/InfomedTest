@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using InfomedTest.Models;
 using Newtonsoft.Json.Linq;
 using System.Web.Script.Serialization;
+using System.Text;
 
 namespace InfomedTest.Controllers
 {
@@ -31,7 +32,7 @@ namespace InfomedTest.Controllers
 
             return View();
         }
-
+      
         public ActionResult Doctors()
         {
             var path = Server.MapPath(@"~/Models/JsonData/doctors.json");
@@ -58,21 +59,12 @@ namespace InfomedTest.Controllers
                 list = Languages(list);
                 return View(list);
             }
-
-            
             
         }
 
       
         public List<Doctor> Languages(List<Doctor> list)
         {
-          //   string[] languagesArr = id.Split(',');
-            //remove last comma and trim all elements
-            //if (//languagesArr.Length>1)
-            //{
-            //  //  languagesArr = languagesArr.Select(x => x == null ? null : x.Trim()).Take(languagesArr.Count() - 1).ToArray();
-            //}
-
             List<string> listToReturn = new List<string>();
 
             var path = Server.MapPath(@"~/Models/JsonData/language.json");
@@ -102,56 +94,12 @@ namespace InfomedTest.Controllers
                     }
                     
                 }
-                //foreach (var languageItem in languagesArr)
-                //{
-                //    foreach (var dictioItem in dictio)
-                //    {
-                //        if (languageItem== dictioItem.Key)
-                //        {
-                //            listToReturn.Add(dictioItem.Value);
-                //        }
-                //    }
-                //}
 
             }
             return list;
-            //string joined = string.Join(", ", listToReturn);
-
-            //return joined;
     }
 
 
-        //private List<Doctor> AddLanguages(List<Doctor> list)
-        //{
-        //    var path = Server.MapPath(@"~/Models/JsonData/language.json");
-
-
-
-
-
-        //    using (StreamReader r = new StreamReader(path))
-        //    {
-        //        string languages = r.ReadToEnd();
-        //        var jsSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
-        //        Dictionary<string, object> dict = (Dictionary<string, object>)jsSerializer.DeserializeObject(languages);
-        //        var jss = new JavaScriptSerializer();
-        //        var table = jss.Deserialize<dynamic>(languages);
-
-        //        foreach (var doctor in list)
-        //        {
-        //            foreach (var language in table)
-        //            {
-        //                if (true)
-        //                {
-
-        //                }
-        //            }
-        //        }
-
-        //    }
-        //    return list;
-        //}
 
         private List<Doctor> FixPhones(List<Doctor> list)
         {
@@ -196,6 +144,21 @@ namespace InfomedTest.Controllers
                 
             }
             return list;
+        }
+     
+      [HttpPost]
+        public void SaveContact(string drid,string Name, string Phone)
+        {
+            var path = Server.MapPath(@"~/Models/JsonData/details.txt");
+
+            using (var fs = new FileStream(path, FileMode.Append))
+            using (var sw = new StreamWriter(fs))
+            {
+                sw.WriteLine(string.Format("{0} ask to contact Dr {1} and his phone is {2}", Name, drid, Phone));
+            }
+
+
+
         }
     }
 }
