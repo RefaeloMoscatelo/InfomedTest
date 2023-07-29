@@ -26,7 +26,7 @@
         margin:5%;
     }
 </style>
-dialo
+
 <table id="tbl" class="table">
     <thead>
         <tr>
@@ -48,8 +48,8 @@ dialo
                          style="background-image: linear-gradient(
       to left,
       blue 0%,
-      blue  @(item.Rating*20)%,
-      transparent 33.333%,
+      blue @(item.Rating*15)%, 
+      transparent 0%,
       transparent 100%);
   "> <span class="rate">(@item.Rating.0) </span></div>
 
@@ -117,7 +117,12 @@ dialo
             });
         }
         $(document).ready(function () {
-            $("#tbl").dataTable();
+            $("#tbl").dataTable({
+                "order": [],
+                "oLanguage": {
+                    "sSearch": "חיפוש "
+                }
+            });
             $(function () {
                 $('span.stars').stars();
             });
@@ -130,7 +135,7 @@ dialo
                     $(this).html("כן")
                 }
             });
-           
+           // $("#tbl_filter").first().text("חיפוש")
             $("#contactForm").dialog({
                 autoOpen: false, modal: true, show: "blind", hide: "blind", height: 280,
             });

@@ -45,7 +45,7 @@ namespace InfomedTest.Controllers
                   .Where(x => x.promotionLevel <= 5)
                   .OrderBy(x => x.reviews.averageRating)
                  .ThenByDescending(x => x.reviews.totalRatings)
-                 .ThenByDescending(x => x.promotionLevel).Select(x => new Doctor
+                 .ThenBy(x => x.promotionLevel).Select(x => new Doctor
                  {
                      ID = x.id,
                      FullName = x.fullName,
