@@ -73,7 +73,7 @@
 <td>
     <p> <input type="button" value=@Html.DisplayFor(modelItem => item.PhoneNumber) /></p>
 
-    <p> <input name="@item.ID" type="button" class="btnCreateContact" value="צור קשר" /></p>
+   <p> <input name="@item.ID, @item.FullName" type="button" class="btnCreateContact" value="צור קשר" /></p>
 </td>
 
 </tr>
@@ -83,7 +83,7 @@
 
 <div id="contactForm">
     <form action="javascript:;" id="frm" >
-
+    <input type="hidden" name="drid" id="hdn" value="" />
         <div class="form-group">
             <div class="first_row_form">
                 <input type="text" class="form-control" id="fname" name="Name" placeholder="שם" tabindex="1" pattern="[A-Za-z \u0590-\u05FF]*" title="Name should only contain letters" required>
